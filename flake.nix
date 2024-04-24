@@ -39,17 +39,39 @@
 
       in
       {
-        devShells.default = pkgs.mkShell {
-          buildInputs = with pkgs; [
+        devShells.default = with pkgs; mkShell {
+          buildInputs = [
             openssl
             rust-analyzer
             pkg-config
             rust-bin.beta.latest.default
             customNeovim
+            alsa-lib
+            udev
+            vulkan-tools
+            vulkan-headers
+            vulkan-loader
+            vulkan-validation-layers
+            lld
+            wayland
+            libxkbcommon
           ];
-        };
 
+          shellHook = ''
+            export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:${
+              pkgs.lib.makeLibraryPath [
+                udev
+                alsaLib
+                vulkan-loader
+                libxkbcommon
+              ]
+            }"
+          '';
+
+          RUST_SRC_PATH = rustPlatform.rustLibSrc;
+        };
         packages.default = pkgs.customNeovim;
+        packages.defaultPackage = pkgs.customNeovim;
 
         apps.default = {
           type = "app";
