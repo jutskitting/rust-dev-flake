@@ -1,4 +1,4 @@
-{
+ {
   description = "A Neovim Shell for rust development";
 
   inputs = {
@@ -55,6 +55,7 @@
             lld
             wayland
             libxkbcommon
+            rustup
           ];
 
           shellHook = ''
@@ -80,4 +81,3 @@
       }
     );
 }
-
