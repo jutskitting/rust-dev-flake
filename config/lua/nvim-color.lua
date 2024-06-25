@@ -1,4 +1,3 @@
-
 -- Define your colors
 local colors = {
     background = "#000000",   
